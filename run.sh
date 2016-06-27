@@ -10,9 +10,9 @@ MINLPLIB=/home/stefan/work/gams/minlplib/data/gms
 # path to GAMS executable (GAMS >= 24.5 !)
 GAMS=/home/stefan/work/gams/gams/gams
 
-TESTSET=test
+TESTSET=nontrivial
 SOLVERS="ANTIGONE BARON COUENNE LINDO SCIP"
-TIMELIMIT=30
+TIMELIMIT=3600
 GAPLIMIT=0.000001
 MEMLIMIT=20000  # usually ignored
 
@@ -31,7 +31,8 @@ do
     SETTINGS=${s}
   fi
 
-  echo "Running $s with $SETTINGS settings"
+  echo
+  echo "Running $s with $SETTINGS settings on testset ${TESTSET}"
   ./check_gamscluster.sh ${TESTSET} ${GAMS} ${s} ${SETTINGS} "" ${TIMELIMIT} 2100000000 ${MEMLIMIT} ${GAPLIMIT} 1 false no local dummy dummy /tmp 1 true 0
 
 done
