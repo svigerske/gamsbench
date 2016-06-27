@@ -80,6 +80,7 @@ BEGIN  {
 /^\* SOLVER/     { solver=$2; }
 /^\* TIMELIMIT/  { timelimit=$2; }
 /^\* SETTINGS/   { settings=$2; }
+/^\* GAPLIMIT/   { gaplimit=$2; }
 /^\*/  { next; } # skip other comments and invalid problems
 /^ *$/ { next; } # skip empty lines
 
@@ -196,8 +197,8 @@ END {
      # we consider iteration limit reached as node limit reached, because there is no extra status for node limits
      nodelimreached = (solstat[m] == 2);
 
-     # TODO consider gaplimit
-     gapreached = 0;
+     # TODO consider gaplimit ?
+     gapreached = 0
      
      timeout = 0;
 
@@ -216,10 +217,10 @@ END {
          optimal = 1;
          markersym = "  ";
        }
-       else if( abs(db) < 1e-06 )
-         gap = -1.0;
-      else if( abs(pb) < 1e-06 )
-         gap = -1.0;
+       #else if( abs(db) < 1e-06 )
+       #  gap = -1.0;
+       #else if( abs(pb) < 1e-06 )
+       #  gap = -1.0;
        else if( pb*db < 0.0 )
          gap = -1.0;
        else if( abs(db) >= +infty )
@@ -227,9 +228,11 @@ END {
        else if( abs(pb) >= +infty )
          gap = -1.0;
       else
-         gap = 100.0*abs((pb-db)/min(abs(db),abs(pb)));
-       if( gap < 0.0 )
+         gap = 100.0*abs((pb-db)/max(abs(db),abs(pb)));
+       if( gap < 0.0 ) {
+         gap = 1.0;
          gapstr = "  --  ";
+       }
        else if( gap < 1e+04 )
          gapstr = sprintf("%6.1f", gap);
        else
@@ -289,6 +292,10 @@ END {
                status = "ok";
                pass++;
              }
+             else if( (gap <= 105*gaplimit) && abs(pb - sol[prob])/max(abs(pb),abs(sol[prob])) <= 1.05*gaplimit ) {
+               status = "ok";
+               pass++;
+             }
              else {
                status = "fail";
                failtime += tottime;
@@ -329,6 +336,10 @@ END {
                status = "solved not verified";
                pass++;
              }
+             else if( (gap <= 105*gaplimit) && abs(pb - sol[prob])/max(abs(pb),abs(sol[prob])) <= 1.05*gaplimit ) {
+               status = "solved not verified";
+               pass++;
+             }
              else {
                status = "fail";
                failtime += tottime;
@@ -359,6 +370,10 @@ END {
 	     }
 	  }
 	  else if( abs(pb - db) <= max(abstol, reltol) ) {
+	     status = "solved not verified";
+	     pass++;
+	  }
+	  else if( (gap <= 105*gaplimit) ) {
 	     status = "solved not verified";
 	     pass++;
 	  }
@@ -399,6 +414,10 @@ END {
 	     timeouts++;
 	  }
 	  else if( abs(pb - db) < max(abstol,reltol) ) {
+	     status = "solved not verified";
+	     pass++;
+	  }
+	  else if( (gap <= 105*gaplimit) ) {
 	     status = "solved not verified";
 	     pass++;
 	  }
