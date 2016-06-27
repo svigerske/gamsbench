@@ -26,10 +26,14 @@ done
 
 for s in ${SOLVERS}
 do
-  echo "Running $s"
-  ./check_gamscluster.sh ${TESTSET} ${GAMS} ${s} opts "" ${TIMELIMIT} 2100000000 ${MEMLIMIT} ${GAPLIMIT} 1 false no local dummy dummy /tmp 1 true 0
+  SETTINGS=default
+  if [ -e settings/${s}.gamsset ]; then
+    SETTINGS=${s}
+  fi
 
-break
+  echo "Running $s with $SETTINGS settings"
+  ./check_gamscluster.sh ${TESTSET} ${GAMS} ${s} ${SETTINGS} "" ${TIMELIMIT} 2100000000 ${MEMLIMIT} ${GAPLIMIT} 1 false no local dummy dummy /tmp 1 true 0
+
 done
 
 awk -f cmpres.awk results/check.${TESTSET}.*res | tee compare.txt
