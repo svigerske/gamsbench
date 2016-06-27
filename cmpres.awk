@@ -78,7 +78,7 @@ function printhline(nsolver,short, printsoltimes)
    {
 
       if( s == 0 )
-         printf("--------------------+-+---------+--------+");
+         printf("------------------------------+-+---------+--------+");
       else
       {
          if( !short )
@@ -763,10 +763,10 @@ END {
 	   }
 	   else
 	   {
-	       if ( length(sname) <= 39 )
-		   printf(" %39s |", sname)
+	       if ( length(sname) <= 49 )
+		   printf(" %49s |", sname)
 	       else
-		   printf(" *%38s |", substr(sname, length(sname)-39));
+		   printf(" *%48s |", substr(sname, length(sname)-49));
 	   }
        }
        else
@@ -788,7 +788,7 @@ END {
 	   else
 	   {
 	       if( length(sname) <= 33 )
-		   printf("%31s |", sname);
+		   printf("%33s |", sname);
 	       else
 		   printf("*%30s |", substr(sname, length(sname)-31));
 	   }
@@ -796,7 +796,7 @@ END {
    }
    printf("\n");
    printhline(nsolver,short, printsoltimes);
-   printf("  Name              |");
+   printf("  Name                        |");
    for( s = 0; s < nsolver; ++s )
    {
       if( s == 0 || short )
@@ -855,12 +855,12 @@ END {
    for( i = 0; i < problistlen; ++i )
    {
       p = problist[i];
-      if( length(p) > 18 )
-         shortp = substr(p, length(p)-17, 18);
+      if( length(p) > 28 )
+         shortp = substr(p, length(p)-27, 28);
       else
          shortp = p;
 
-      line = sprintf("%-18s", shortp);
+      line = sprintf("%-28s", shortp);
       fail = 0;
       readerror = 0;
       unprocessed = 0;
@@ -1393,7 +1393,7 @@ END {
 
    # print solvers' overall statistics
    probnumstr = "("nevalprobs[printorder[0],0]")";
-   printf("%-14s %5s", "total", probnumstr);
+   printf("%-24s %5s", "total", probnumstr);
    for( o = 0; o < nsolver; ++o )
    {
       s = printorder[o];
@@ -1416,7 +1416,7 @@ END {
       }
    }
    printf("\n");
-   printf("%-20s", "geom. mean");
+   printf("%-30s", "geom. mean");
    nodegeomcomp = -1;
    timegeomcomp = -1;
    nodetotalcomp = -1;
@@ -1461,7 +1461,7 @@ END {
       }
    }
    printf("\n");
-   printf("%-20s", "shifted geom.");
+   printf("%-30s", "shifted geom.");
    nodeshiftedgeomcomp = -1;
    timeshiftedgeomcomp = -1;
    timetofirstshiftedgeomcomp = -1;
@@ -1518,7 +1518,7 @@ END {
    printhline(nsolver,short, printsoltimes);
 
    # compute and print result for McNemar test to "solution found?"  w.r.t. reference setting
-   printf("%-20s ","McNemar (feas)");
+   printf("%-30s ","McNemar (feas)");
    printf("%-18s  ","               ");
    for( o = 1; o < nsolver; ++o )
    {
@@ -1538,7 +1538,7 @@ END {
    printf("\n");
 
    # compute and print result for McNemar test to "optimality proven?" w.r.t. reference setting
-   printf("%-20s ","McNemar (opt)");
+   printf("%-30s ","McNemar (opt)");
    printf("%-18s  ","               ");
    for( o = 1; o < nsolver; ++o )
    {
@@ -1558,7 +1558,7 @@ END {
    printf("\n");
 
    # compute and print result for Wilcoxon signed rank test for time to optimality w.r.t. reference setting
-   printf("%-20s ","Wilcoxon (time)");
+   printf("%-30s ","Wilcoxon (time)");
    printf("%-18s  ","               ");
    for( o = 1; o < nsolver; ++o )
    {
@@ -1578,7 +1578,7 @@ END {
    # compute and print result for Wilcoxon signed rank test for time to first solution w.r.t. reference setting
    if( printsoltimes )
    {
-      printf("%-20s ","Wilcoxon (first)");
+      printf("%-30s ","Wilcoxon (first)");
       printf("%-18s  ","               ");
       for( o = 1; o < nsolver; ++o )
       {
@@ -1596,7 +1596,7 @@ END {
    }
 
    # compute and print result for Wilcoxon signed rank test for number of nodes w.r.t. reference setting
-   printf("%-20s ","Wilcoxon (nodes)");
+   printf("%-30s ","Wilcoxon (nodes)");
    printf("%-18s  ","               ");
    for( o = 1; o < nsolver; ++o )
    {
