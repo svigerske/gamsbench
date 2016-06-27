@@ -175,6 +175,9 @@ END {
      # if model status says "infeasible", set dual bound to correct infinity
      if( modstat[m] == 4 || modstat[m] == 10 || modstat[m] == 19 )
        dualbnd[m] = maxobj[m] ? -infty : +infty;
+     # if model status says "unbounded", set primal and dual bound to correct infinity
+     if( modstat[m] == 3 )
+       primalbnd[m] = dualbnd[m] = maxobj[m] ? +infty : -infty;
 
      # if CNS model status says solved, then overwrite primal and dual bound
      if( modstat[m] == 15 || modstat[m] == 16 || modstat[m] == 17 ) {
