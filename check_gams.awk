@@ -200,9 +200,7 @@ END {
      # we consider iteration limit reached as node limit reached, because there is no extra status for node limits
      nodelimreached = (solstat[m] == 2);
 
-     # TODO consider gaplimit ?
-     gapreached = 0
-     
+     gapreached = 0;  # we consider gaplimit reaching as solved and not hitting a limit, so gapreached will remain 0
      timeout = 0;
 
      if( !onlyinsolufile || solstatus[prob] != "" )  {
