@@ -444,7 +444,7 @@ END {
        printf("\\\\\n") > TEXFILE;
 
        # note: probtype has length 5, but field width is 6
-       printf("%-*s  %-5s %7d %7d      ??      ?? %16.9g %16.9g %6s %9d %8d %7.1f %s (%2d - %2d)\n",
+       printf("%-*s  %-5s %7d %7d     n/a     n/a %16.9g %16.9g %6s %9d %8d %7.1f %s (%2d - %2d)\n",
               namelength, shortprob, probtype, cons[m], vars[m], db, pb, gapstr, iters[m], nodes[m], time[m], status, modstat[m], solstat[m]);
 
        #PAVER output: see http://www.gamsworld.org/performance/paver/pprocess_submit.htm
