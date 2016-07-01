@@ -714,7 +714,7 @@ END {
    bestbetterobj = 0;
    bestfeasibles = 0;
 
-   # calculate the order in which the columns should be printed: CPLEX < SCIP, default < non-default
+   # calculate the order in which the columns should be printed: BARON first, default < non-default
    for( s = 0; s < nsolver; ++s )
    {
       sname = solvername[s];
@@ -730,8 +730,8 @@ END {
          }
          else
          {
-            # use alphabetical order, but put CPLEX before SCIP and "default" before all others
-            if( substr(sname, 1, 5) == "CPLEX" && substr(iname, 1, 5) != "CPLEX" )
+            # use alphabetical order, but put BARON first and "default" before all others
+            if( substr(sname, 1, 5) == "BARON" && substr(iname, 1, 5) != "BARON" )
                break;
             if( substr(sname, 1, 5) == substr(iname, 1, 5) &&
                match(sname, "default") != 0 && match(iname, "default") == 0 )
