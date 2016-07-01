@@ -242,7 +242,7 @@ END {
        probtype = type[m];
 
        tottime = time[m];
-       if( time[m] >= timelimit && timelimit > 0.0 )
+       if( time[m] >= 0.999*timelimit && timelimit > 0.0 )
          timeout = 1;
        else if( gapreached || nodelimreached )
          timeout = 0;
