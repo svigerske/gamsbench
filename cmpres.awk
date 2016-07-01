@@ -1044,12 +1044,9 @@ END {
                notimeout = 0;
                if( !unprocessed )
                {
-                  if( countprob )
-                  {
                      ntimeouts[s,0]++;
                      ntimeouts[s,category[s]]++;
                      nthistimeouts++;
-                  }
                }
             }
             else
