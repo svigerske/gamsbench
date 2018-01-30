@@ -1,5 +1,2 @@
-# use wallclock timing
-timing/clocktype = 2
-
 # reduce display frequency
 display/freq = 10000
