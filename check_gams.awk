@@ -102,6 +102,7 @@ BEGIN {
 #18 NumberOfNodes
 
 $3 == solver || $3 == "EXAMINER2" {
+   sub("\\.gms", "", $1);
    model[nprobs] = $1;
    type[nprobs] = $2;
    maxobj[nprobs] = ( $5 == 1 ? 1 : 0 );
