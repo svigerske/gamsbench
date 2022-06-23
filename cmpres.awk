@@ -442,6 +442,9 @@ function z_to_p(z)
 
 BEGIN {
 
+   # if nonzero, then treat every abort or fail as if solved successfully with the time specified here
+   failtime = 0;
+
    short = 0;  #for each non reference solver, only absolute time and number of nodes are printed
    printsoltimes = 0; # for reference solver, absolute time to first and best solution are printed, for other solvers the corresponding ratios
                       #! please NOTE that this additional output is currently only available for SCIP .res-files created with the evalcheck.sh script and
@@ -460,7 +463,7 @@ BEGIN {
    onlymarked = 0;
    onlyprocessed = 0;
    maxscore = 10.0;
-   consistency = 1;
+   consistency = (failtime > 0 ? 0 : 1);
    onlyfeasible = 0;
    onlyinfeasible = 0;
    onlyfail = 0;
@@ -622,6 +625,13 @@ BEGIN {
          status[nsolver,nprobs[nsolver]] = "timeout";
       if( status[nsolver,nprobs[nsolver]] == "sollimit" || status[nsolver,nprobs[nsolver]] == "gaplimit" || status[nsolver,nprobs[nsolver]] == "solved" )
          status[nsolver,nprobs[nsolver]] = "ok";
+
+      # SV on Hans' request
+      if( failtime > 0 && (status[nsolver,nprobs[nsolver]] == "fail" || status[nsolver,nprobs[nsolver]] == "abort") )
+      {
+         status[nsolver,nprobs[nsolver]] = "timeout";
+         time[nsolver,nprobs[nsolver]] = failtime;
+      }
 
       if( status[nsolver,nprobs[nsolver]] == "timeout" || status[nsolver,nprobs[nsolver]] == "nodelimit" ||  status[nsolver,nprobs[nsolver]] == "memlimit")
          hitlimit[nsolver,nprobs[nsolver]] = 1;
