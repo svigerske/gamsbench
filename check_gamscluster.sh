@@ -189,8 +189,8 @@ solverexe=`dirname $solverexe`
 solverexe=`grep -A 2 ^$SOLVER ${solverexe}/"gmscmpun.txt" | tail -1`
 if test -z "$solverexe"
 then
-  echo "$SOLVER does not seem to be a GAMS solver (does not appear in gmscmpun.txt). Abort."
-  exit 1
+  echo "$SOLVER does not appear in gmscmpun.txt. Assuming executable will be gmsgenux.out."
+  solverexe=gmsgenux.out
 fi
 
 # if run locally, run schulz to make sure solvers do not run forever
