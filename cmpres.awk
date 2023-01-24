@@ -1810,6 +1810,42 @@ END {
       fulltotaltime, fulltotaltime/3600.0, fulltotaltime/(3600.0*24), fulltotaltime/(3600.0*24*7),
       fulltotaltime/(3600.0*24*30));
 
+   printf("\n");
+   printf("Hans, please copy from here:\n\n");
+
+   # alphabetic sort of solvers
+   for( i in solvername )
+      tmp[solvername[i]] = i
+   asorti(tmp, tmporder);
+   for( i in tmporder )
+      lexorder[i-1] = tmp[tmporder[i]]
+
+   printf("          ");
+   for( o = 0; o < nsolver; ++o )
+   {
+      s = lexorder[o];
+      printf("%10s", substr(solvername[s], 1, index(solvername[s], "(")-1));
+   }
+   printf("\n");
+
+   printf("solved    ");
+   for( o = 0; o < nsolver; ++o )
+   {
+      s = lexorder[o];
+      sname = solvername[s];
+      printf("%10d", nsolved[s,0]);
+   }
+   printf("\n");
+
+   printf("geom mean ");
+   for( o = 0; o < nsolver; ++o )
+   {
+      s = lexorder[o];
+      sname = solvername[s];
+      printf("%10.1f", timegeom[s,0]/timegeom[printorder[0],0]);
+   }
+   printf("\n");
+
    # generate tex file
    if( texfile != "" )
    {
