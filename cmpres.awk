@@ -445,6 +445,9 @@ BEGIN {
    # if nonzero, then treat every abort or fail as if solved successfully with the time specified here
    failtime = 0;
 
+   # the reference solver w.r.t. which to compute relative performance
+   firstsolver = "OCTERACT";
+
    short = 0;  #for each non reference solver, only absolute time and number of nodes are printed
    printsoltimes = 0; # for reference solver, absolute time to first and best solution are printed, for other solvers the corresponding ratios
                       #! please NOTE that this additional output is currently only available for SCIP .res-files created with the evalcheck.sh script and
@@ -724,7 +727,8 @@ END {
    bestbetterobj = 0;
    bestfeasibles = 0;
 
-   # calculate the order in which the columns should be printed: BARON first, default < non-default
+   # calculate the order in which the columns should be printed: firstsolver first, default < non-default
+   firstsolverlen = length(firstsolver);
    for( s = 0; s < nsolver; ++s )
    {
       sname = solvername[s];
@@ -740,13 +744,13 @@ END {
          }
          else
          {
-            # use alphabetical order, but put BARON first and "default" before all others
-            if( substr(sname, 1, 5) == "BARON" && substr(iname, 1, 5) != "BARON" )
+            # use alphabetical order, but put firstsolver first and "default" before all others
+            if( substr(sname, 1, firstsolverlen) == firstsolver && substr(iname, 1, firstsolverlen) != firstsolver )
                break;
-            if( substr(sname, 1, 5) == substr(iname, 1, 5) &&
+            if( substr(sname, 1, firstsolverlen) == substr(iname, 1, firstsolverlen) &&
                match(sname, "default") != 0 && match(iname, "default") == 0 )
                break;
-            if( substr(sname, 1, 5) == substr(iname, 1, 5) &&
+            if( substr(sname, 1, firstsolverlen) == substr(iname, 1, firstsolverlen) &&
                (match(sname, "default") == 0) == (match(iname, "default") == 0) &&
                sname < iname )
                break;
