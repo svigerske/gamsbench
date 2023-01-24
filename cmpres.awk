@@ -1842,6 +1842,15 @@ END {
    }
    printf("\n");
 
+   printf("shgeommean");
+   for( o = 0; o < nsolver; ++o )
+   {
+      s = lexorder[o];
+      sname = solvername[s];
+      printf("%10.1f", timeshiftedgeom[s,0]/timeshiftedgeom[printorder[0],0]);
+   }
+   printf("\n");
+
    printf("solved    ");
    for( o = 0; o < nsolver; ++o )
    {
