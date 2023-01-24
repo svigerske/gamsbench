@@ -1828,13 +1828,9 @@ END {
    }
    printf("\n");
 
-   printf("solved    ");
+   printf("----------");
    for( o = 0; o < nsolver; ++o )
-   {
-      s = lexorder[o];
-      sname = solvername[s];
-      printf("%10d", nsolved[s,0]);
-   }
+      printf("----------");
    printf("\n");
 
    printf("geom mean ");
@@ -1844,6 +1840,20 @@ END {
       sname = solvername[s];
       printf("%10.1f", timegeom[s,0]/timegeom[printorder[0],0]);
    }
+   printf("\n");
+
+   printf("solved    ");
+   for( o = 0; o < nsolver; ++o )
+   {
+      s = lexorder[o];
+      sname = solvername[s];
+      printf("%10d", nsolved[s,0]);
+   }
+   printf("\n");
+
+   printf("----------");
+   for( o = 0; o < nsolver; ++o )
+      printf("----------");
    printf("\n");
 
    # generate tex file
