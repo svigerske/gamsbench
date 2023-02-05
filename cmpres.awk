@@ -1833,16 +1833,16 @@ END {
       printf("----------");
    printf("\n");
 
-   printf("geom mean ");
+   printf("unscaled  ");
    for( o = 0; o < nsolver; ++o )
    {
       s = lexorder[o];
       sname = solvername[s];
-      printf("%10.1f", timegeom[s,0]/timegeom[printorder[0],0]);
+      printf("%10.1f", timeshiftedgeom[s,0]);
    }
    printf("\n");
 
-   printf("shgeommean");
+   printf("scaled    ");
    for( o = 0; o < nsolver; ++o )
    {
       s = lexorder[o];
