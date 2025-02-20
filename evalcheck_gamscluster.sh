@@ -86,6 +86,17 @@ do
     echo "* InputFileName,ModelType,SolverName,OptionFile,Direction,NumberOfEquations,NumberOfVariables,NumberOfDiscreteVariables,NumberOfNonZeros,NumberOfNonlinearNonZeros," >> $TRCFILE
     echo "* ModelStatus,SolverStatus,ObjectiveValue,ObjectiveValueEstimate,SolverTime,ETSolver,NumberOfIterations,NumberOfNodes" >> $TRCFILE
     echo "*" >> $TRCFILE
+    # initalize gams/examiner2 trace file
+    echo "* Trace Record Definition" > $EXMFILE
+    echo "* GAMS/Examiner2 link" >> $EXMFILE
+    echo "* InputFileName,ModelType,SolverName,NLP,MIP,JulianDate,Direction" >> $EXMFILE
+    echo "* ,NumberOfEquations,NumberOfVariables,NumberOfDiscreteVariables" >> $EXMFILE
+    echo "* ,NumberOfNonZeros,NumberOfNonlinearNonZeros,OptionFile" >> $EXMFILE
+    echo "* ,ModelStatus,SolverStatus,ObjectiveValue,ObjectiveValueEstimate" >> $EXMFILE
+    echo "* ,SolverTime,NumberOfIterations,NumberOfDomainViolations,NumberOfNodes,#empty1" >> $EXMFILE
+    echo "* ,WhatPoint,PrimalVarInfeas,DualVarInfeas,PrimalConInfeas,DualConInfeas" >> $EXMFILE
+    echo "* ,PrimalCompSlack,DualCompSlack" >> $EXMFILE
+    echo "*" >> $EXMFILE
     echo > $LSTFILE
 
     echo "create overall output, error, and trace file for $EVALFILE"
@@ -105,6 +116,7 @@ do
       # pass auxiliary lines about solver and limits form eval file to trace file
       case $i in *,* )
         echo "* $i" >> $TRCFILE
+        echo "* $i" >> $EXMFILE
         continue
         ;;
       esac
@@ -147,7 +159,7 @@ do
       if test -e $FILE
       then
         test -e $EXMFILE || grep "^*" $FILE > $EXMFILE
-        grep -v "^*" $FILE >> $EXMFILE
+        grep -v "^*" $FILE | sed -e "s/${SOLVER,,}/$SOLVER/" >> $EXMFILE  # correct that examiner writes solvernames in lowercase
         if test "$REMOVE" = "1"
         then
           rm -f $FILE
@@ -199,6 +211,6 @@ do
       fi
     fi
 
-    awk -f check_gams.awk -v "TEXFILE=$TEXFILE" -v "PAVFILE=$PAVFILE" $AWKARGS $SOLUFILE $TRCFILE | tee $RESFILE
+    awk -f check_gamsexm.awk -v "TEXFILE=$TEXFILE" -v "PAVFILE=$PAVFILE" $AWKARGS $SOLUFILE $EXMFILE | tee $RESFILE
   fi
 done
