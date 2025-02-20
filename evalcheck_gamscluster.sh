@@ -203,9 +203,9 @@ do
     then
       SOLUFILE=testset/$TSTNAME.solu
     else 
-      if test -f testset/all.solu
+      if test -f testset/minlplib.solu
       then
-        SOLUFILE=testset/all.solu
+        SOLUFILE=testset/minlplib.solu
       else
         SOLUFILE=""
       fi

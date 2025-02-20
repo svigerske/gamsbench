@@ -446,7 +446,7 @@ BEGIN {
    failtime = 0;
 
    # the reference solver w.r.t. which to compute relative performance
-   firstsolver = "OCTERACT";
+   firstsolver = "BARON";
 
    short = 0;  #for each non reference solver, only absolute time and number of nodes are printed
    printsoltimes = 0; # for reference solver, absolute time to first and best solution are printed, for other solvers the corresponding ratios

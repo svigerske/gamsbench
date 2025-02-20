@@ -213,10 +213,10 @@ fi
 if test $SETCUTOFF = 1 ; then
   if test -e testset/$TSTNAME.solu ; then
     SOLUFILE=testset/$TSTNAME.solu
-  elif test -e testset/all.solu ; then
-    SOLUFILE=testset/all.solu
+  elif test -e testset/minlplib.solu ; then
+    SOLUFILE=testset/minlplib.solu
   else
-    echo "Warning: SETCUTOFF=1 set, but no .solu file (testset/$TSTNAME.solu or testset/all.solu) available"
+    echo "Warning: SETCUTOFF=1 set, but no .solu file (testset/$TSTNAME.solu or testset/minlplib.solu) available"
     SETCUTOFF=0
   fi
 fi
