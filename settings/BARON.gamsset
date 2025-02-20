@@ -1,3 +1,4 @@
 AbsConFeasTol 1e-6
 AbsIntFeasTol 1e-6
 InfBnd = 1e12
+WantDual = 0

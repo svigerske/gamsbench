@@ -1,1 +1,2 @@
-intfeastol = 1e-6
+intfeastol 1e-6
+solvefixed 0
