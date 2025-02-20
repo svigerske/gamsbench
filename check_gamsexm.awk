@@ -66,6 +66,7 @@ BEGIN {
    fail = 0;
    pass = 0;
    timelimit = 0;
+   feastol = 1.1e-6;
    settings = "default";
    namelength = 4;
 }
@@ -148,6 +149,8 @@ $3 == solver && $23 == "SOLUP" {
    time[nprobs] = $18;
    iters[nprobs] = $19;
    nodes[nprobs] = $21;
+   primalvarinfeas[nprobs] = $24;
+   primalconinfeas[nprobs] = $26;
 
    if( length($1) > namelength )
       namelength = length($1);
@@ -194,11 +197,19 @@ END {
          shortprob = prob;
 
       if( primalbnd[m] == "NA" )
+      {
          primalbnd[m] = ( maxobj[m] ? -infty : +infty );
+         primalvarinfeas[m] = 0.0;
+         primalconinfeas[m] = 0.0;
+      }
 
       # do not trust primal bound in trace file if model status indicates that no feasible solution was found
       if( modstat[m] != 1 && modstat[m] != 2 && modstat[m] != 3 && modstat[m] != 7 && modstat[m] != 8 )
+      {
          primalbnd[m] = ( maxobj[m] ? -infty : +infty );
+         primalvarinfeas[m] = 0.0;
+         primalconinfeas[m] = 0.0;
+      }
 
       # if dual bound is not given, try to guess from model status
       if( dualbnd[m] == "NA" )
@@ -298,6 +309,20 @@ END {
       if( aborted )
       {
          status = "abort";
+         failtime += tottime;
+         fail++;
+      }
+      else if( primalvarinfeas[m] > feastol )
+      {
+         # variable bounds violated
+         status = sprintf("fail (bndviol=%g)", primalvarinfeas[m]);
+         failtime += tottime;
+         fail++;
+      }
+      else if( primalconinfeas[m] > feastol )
+      {
+         # constraints violated
+         status = sprintf("fail (conviol=%g)", primalconinfeas[m]);
          failtime += tottime;
          fail++;
       }
