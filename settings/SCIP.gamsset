@@ -3,4 +3,4 @@ display/freq = 10000
 # replace missing bounds by 1e12
 gams/infbound = 1e12
 # reset to scip default
-constraints/nonlinear/linearizeheursol = 0
+constraints/nonlinear/linearizeheursol = o
