@@ -123,6 +123,8 @@ GAMSOPTS="$GAMSOPTS nodlim=$NODELIMIT"
 GAMSOPTS="$GAMSOPTS workspace=$MEMLIMIT"
 GAMSOPTS="$GAMSOPTS optcr=$GAPLIMIT"
 GAMSOPTS="$GAMSOPTS threads=$THREADS"
+# treat NLP/QCP as MINLP/MIQCP for Hans who wants to run SHOT on purely continuous problems
+GAMSOPTS="$GAMSOPTS --NLP=MINLP --QCP=MIQCP"
 
 # set SBB option to overwrite NLP solver status files in each node instead of appending
 if test $SOLVER = SBB

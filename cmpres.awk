@@ -443,7 +443,7 @@ function z_to_p(z)
 BEGIN {
 
    # if nonzero, then treat every abort or fail as if solved successfully with the time specified here
-   failtime = 0;
+   failtime = 7200;
 
    # the reference solver w.r.t. which to compute relative performance
    firstsolver = "BARON";
