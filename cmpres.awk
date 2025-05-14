@@ -916,6 +916,23 @@ END {
          pidx = probidx[p,s];
          processed = (pidx != "");
 
+         if( !processed && failtime > 0 )
+         {
+            pidx = nprobs[s];
+            probidx[p,s] = pidx;
+            name[s,pidx] = p;
+            probcnt[p]++;
+            nprobs[s]++;
+            time[s,pidx] = failtime;
+            nodes[s,pidx] = 1;
+            iters[s,pidx] = 1;
+            status[s,pidx] = "timeout";
+            hitlimit[s,pidx] = 1;
+            primalbound[s,pidx] = 0;
+            dualbound[s,pidx] = 0;
+            processed = 1;
+         }
+
          # make sure, nodes and time are non-zero for geometric means
          nodes[s,pidx] = max(nodes[s,pidx], 1);
          time[s,pidx] = max(time[s,pidx], mintime);
