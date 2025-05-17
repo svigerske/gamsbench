@@ -1,0 +1,2 @@
+Primal.Tolerance.Integer = 1e-6
+Primal.Tolerance.NonlinearConstraint = 1e-6
